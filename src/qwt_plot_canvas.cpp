@@ -1014,8 +1014,6 @@ void QwtPlotCanvas::drawBorder( QPainter *painter )
     }
     else
     {
-#if QT_VERSION >= 0x040500
-
 #if QT_VERSION < 0x050000
         QStyleOptionFrameV3 opt;
 #else
@@ -1057,9 +1055,6 @@ void QwtPlotCanvas::drawBorder( QPainter *painter )
             opt.state |= QStyle::State_Raised;
 
         style()->drawControl(QStyle::CE_ShapedFrame, &opt, painter, this);
-#else
-        drawFrame( painter );
-#endif
     }
 }
 
@@ -1221,14 +1216,10 @@ QImage QwtPlotCanvas::toImageFBO( const QSize &size )
 
     d_data->surfaceGL->makeCurrent();
 
-#if QT_VERSION >= 0x040600
     QGLFramebufferObjectFormat fboFormat;
     fboFormat.setSamples(numSamples);
 
     QGLFramebufferObject fbo( size, fboFormat );
-#else
-    QGLFramebufferObject fbo( size );
-#endif
     QGLFramebufferObject &pd = fbo;
 
 #endif
