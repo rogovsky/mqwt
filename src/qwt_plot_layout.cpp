@@ -1497,17 +1497,16 @@ QSize QwtPlotLayout::minimumSizeHint( const QwtPlot *plot ) const
 
     const QWidget *canvas = plot->canvas();
 
-    int left, top, right, bottom;
-    canvas->getContentsMargins( &left, &top, &right, &bottom );
+    const QMargins m = canvas->contentsMargins();
 
     const QSize minCanvasSize = canvas->minimumSize();
 
     int w = hintData.yAxesWidth();
-    int cw = xAxesWidth + left + 1 + right + 1;
+    int cw = xAxesWidth + m.left() + 1 + m.right() + 1;
     w += qMax( cw, minCanvasSize.width() );
 
     int h = hintData.xAxesHeight();
-    int ch = yAxesHeight + top + 1 + bottom + 1;
+    int ch = yAxesHeight + m.top() + 1 + m.bottom() + 1;
     h += qMax( ch, minCanvasSize.height() );
 
     const QwtTextLabel *labels[2];
