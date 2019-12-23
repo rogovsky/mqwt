@@ -14,6 +14,7 @@
 #include <qwt_plot_layout.h>
 #include <qwt_plot_renderer.h>
 #include <qwt_interval.h>
+#include <qwt_painter.h>
 
 #include <qprinter.h>
 #include <qpen.h>
@@ -242,9 +243,10 @@ Plot::Plot( QWidget *parent ):
     // Avoid jumping when labels with more/less digits
     // appear/disappear when scrolling vertically
 
-    const QFontMetrics fm( axisWidget( QwtAxis::yLeft )->font() );
-    QwtScaleDraw *sd = axisScaleDraw( QwtAxis::yLeft );
-    sd->setMinimumExtent( fm.width( "100.00" ) );
+    const int extent = QwtPainter::horizontalAdvance(
+        axisWidget( QwtAxis::yLeft )->fontMetrics(), "100.00" );
+
+    axisScaleDraw( QwtAxis::yLeft )->setMinimumExtent( extent );
 
     const QColor c( Qt::darkBlue );
     zoomer->setRubberBandPen( c );
